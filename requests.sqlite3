@@ -1,0 +1,41 @@
+SELECT location FROM covid GROUP BY location;
+
+
+SELECT new_deaths_per_million FROM covid WHERE new_deaths_per_million > 1000;
+
+
+--1. How many countries are included in our data set?
+SELECT COUNT(DISTINCT location) FROM covid;
+--2. When was the most recent entry?
+SELECT * FROM covid ORDER BY date DESC LIMIT 1;
+--3. What country had the highest single day deaths per million? 
+SELECT location FROM covid ORDER BY new_deaths_per_million DESC LIMIT 1;
+--4. Select any country. How many times have the deaths per million exceeded 1,000 in one day? 
+SELECT COUNT(*) FROM covid WHERE new_deaths_per_million > 1000;
+--5. Extract the deaths per million for US, France, and India. Plot the time series data and compare results to what the media is currently saying
+SELECT * FROM covid WHERE location = 'France' OR location = 'US' OR location = 'India';
+
+UPDATE covid SET new_deaths_per_million = 0.0 WHERE new_deaths_per_million is null;
+SELECT date, new_deaths_per_million FROM covid WHERE location = 'France';
+
+SELECT date, new_deaths_per_million FROM covid WHERE location = 'United States';
+SELECT date, new_deaths_per_million FROM covid WHERE location = 'India';
+
+
+--6. Plot the deaths per million and cases per million by continent for your birthday in 2020. What does the data say?
+UPDATE covid SET continent = 'other' WHERE continent is null;
+
+
+SELECT continent, date, total_deaths_per_million FROM covid WHERE date = '2020-04-07' GROUP BY continent ORDER BY total_deaths_per_million DESC LIMIT 6;
+--7. Plot the lockdown stringency for each country and color the scatter points by continent. Any insights?
+
+
+SELECT COUNT (location) FROM covid WHERE new_deaths_per_million > 1000;
+
+
+SELECT new_deaths_per_million, location FROM covid WHERE location IN ('France', 'India', 'United States') ORDER BY date ASC;
+
+
+SELECT continent, new_cases_per_million, new_deaths_per_million
+FROM covid
+WHERE date='2020-03-11' GROUP BY continent;
